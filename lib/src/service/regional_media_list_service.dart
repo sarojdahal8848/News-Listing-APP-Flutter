@@ -6,7 +6,7 @@ class RegionalMediaListService{
   static Future<List<MediaListModel>> getRegionalMediaList() async {
     try{
       final response = await http.get(
-        Uri.encodeFull('http://192.168.1.3:800/api/media/regional'),
+        Uri.encodeFull('http://192.168.1.118:8000/api/media/regional'),
         headers: {
           'Accept':'application/json',
           'Content-Type':'application/json'

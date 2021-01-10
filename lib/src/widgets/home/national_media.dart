@@ -28,7 +28,7 @@ class _NationalMediaState extends State<NationalMedia> {
             gridDelegate:
                 SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
             itemBuilder: (context, index) {
-              print(_itemList[index]);
+              // print(_itemList[index]);
               return MediaList(
                   name: _itemList[index].name,
                   image: _itemList[index].imageUrl,

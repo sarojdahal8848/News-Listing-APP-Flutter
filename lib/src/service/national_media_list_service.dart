@@ -6,7 +6,7 @@ class NationalMediaListService{
   static Future<List<MediaListModel>> getNationalMediaList() async {
     try{
       final response = await http.get(
-        Uri.encodeFull('http://192.168.1.3:800/api/media/national'),
+        Uri.encodeFull('http://192.168.1.118:8000/api/media/national'),
         headers: {
           'Accept':'application/json',
           'Content-Type':'application/json'

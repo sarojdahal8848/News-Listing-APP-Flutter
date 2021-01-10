@@ -11,6 +11,7 @@ String mediaListModelToJson(List<MediaListModel> data) => json.encode(List<dynam
 class MediaListModel {
     MediaListModel({
         this.id,
+        this.userId,
         this.name,
         this.imageUrl,
         this.type,
@@ -19,27 +20,30 @@ class MediaListModel {
     });
 
     int id;
+    int userId;
     String name;
     String imageUrl;
     String type;
-    dynamic createdAt;
-    dynamic updatedAt;
+    DateTime createdAt;
+    DateTime updatedAt;
 
     factory MediaListModel.fromJson(Map<String, dynamic> json) => MediaListModel(
         id: json["id"],
+        userId: json["user_id"],
         name: json["name"],
         imageUrl: json["image_url"],
         type: json["type"],
-        createdAt: json["created_at"],
-        updatedAt: json["updated_at"],
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
     );
 
     Map<String, dynamic> toJson() => {
         "id": id,
+        "user_id": userId,
         "name": name,
         "image_url": imageUrl,
         "type": type,
-        "created_at": createdAt,
-        "updated_at": updatedAt,
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
     };
 }

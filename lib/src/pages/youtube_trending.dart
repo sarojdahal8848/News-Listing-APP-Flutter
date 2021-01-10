@@ -1,35 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:paailaNews/src/common.dart';
-import 'package:paailaNews/src/model/category_list_model.dart';
-import 'package:paailaNews/src/service/category_list_service.dart';
+import 'package:paailaNews/src/model/youtube_trending_video_model.dart';
+import 'package:paailaNews/src/pages/youtube_player_screen.dart';
+import 'package:paailaNews/src/service/youtube_trending_video_service.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // ignore: must_be_immutable
-class NewsCategory extends StatefulWidget {
+class YoutubeTrending extends StatefulWidget {
   String id;
-  NewsCategory({this.id});
+  YoutubeTrending({this.id});
   @override
-  _NewsCategoryState createState() => _NewsCategoryState();
+  _YoutubeTrendingState createState() => _YoutubeTrendingState();
 }
 
-class _NewsCategoryState extends State<NewsCategory> {
-  Future <List<CategoryListModel>> _categoryList;
+class _YoutubeTrendingState extends State<YoutubeTrending> {
+  Future <List<YoutubeTrendingVideoModel>> _videoList;
   @override
   void initState() {
-    _categoryList = CategoryListService.getCategoryList(widget.id);
+    _videoList = YoutubeTrendingVideoService.getYoutubeTrendingVideo();
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-      ),
-      body: FutureBuilder<List<CategoryListModel>>(
-        future: _categoryList,
+      body: FutureBuilder<List<YoutubeTrendingVideoModel>>(
+        future: _videoList,
         builder: (context, snapshot) {
           if(snapshot.hasData){
-            List<CategoryListModel> _listItem = snapshot.data;
+            List<YoutubeTrendingVideoModel> _listItem = snapshot.data;
             return ListView.builder(
               itemCount: snapshot.data.length,
               itemBuilder: (context, index) {
@@ -39,11 +36,21 @@ class _NewsCategoryState extends State<NewsCategory> {
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: InkWell(
                 onTap: () {
-                  return _launchNewsUrl(_listItem[index].newsUrl);
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>YoutubePlayerScreen(videoId: _listItem[index].videoId,)));
                 },
                   child: ListTile(
-                  title: Text(_listItem[index].title.toUpperCase(),style: TextStyle(fontWeight:FontWeight.w600),),
-                  trailing: Icon(Icons.arrow_right,color:red),
+                  leading: Container(
+                    height: MediaQuery.of(context).size.height*0.1,
+                    width: MediaQuery.of(context).size.width*0.25,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(_listItem[index].thumbnail),
+                        fit: BoxFit.cover
+                      ),
+                    ),
+                  ),
+                  title: Text(_listItem[index].title,style: TextStyle(fontWeight:FontWeight.w600),),
+                  
                 ),
               ),
             ),
