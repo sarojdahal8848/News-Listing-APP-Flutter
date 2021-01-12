@@ -9,3 +9,5 @@ const Color yellow = Colors.yellow;
 const Color white = Colors.white;
 
 const String API_Key = 'AIzaSyCWu4H4ZNgLd_BWGoy8OAWmXcH3uHfRaHM';
+
+const String BaseUrlProduction = 'https://paailanews.000webhostapp.com/api';

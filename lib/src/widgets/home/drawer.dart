@@ -3,6 +3,8 @@ import 'package:paailaNews/src/common.dart';
 import 'package:paailaNews/src/model/setting_model.dart';
 import 'package:paailaNews/src/service/setting_service.dart';
 import 'package:share/share.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:launch_review/launch_review.dart';
 
 class HomeDrawer extends StatefulWidget {
   @override
@@ -63,7 +65,9 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   height: 10,
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    _launchNewsUrl('https://paailajob.com/about-us');
+                  },
                   child: ListTile(
                     leading: Icon(
                       Icons.info,
@@ -92,7 +96,11 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   ),
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    LaunchReview.launch(
+                      androidAppId: _newData.rateUsLink
+                    );
+                  },
                   child: ListTile(
                     leading: Icon(
                       Icons.star,
@@ -106,7 +114,9 @@ class _HomeDrawerState extends State<HomeDrawer> {
                 ),
                 Divider(),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    _launchNewsUrl(_newData.privacyPolicyLink);
+                  },
                   child: ListTile(
                     leading: Icon(
                       Icons.security,
@@ -119,7 +129,9 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   ),
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    _launchNewsUrl(_newData.termsConditionLink);
+                  },
                   child: ListTile(
                     leading: Icon(
                       Icons.phonelink_lock,
@@ -132,7 +144,9 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   ),
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    _launchNewsUrl(_newData.disclaimerLink);
+                  },
                   child: ListTile(
                     leading: Icon(
                       Icons.warning,
@@ -162,5 +176,20 @@ class _HomeDrawerState extends State<HomeDrawer> {
     await Share.share(link,
         subject: subject,
         sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+  }
+
+  _launchNewsUrl(String urlNews) async {
+    final url = urlNews;
+    // const url = "https://google.com";
+    print(url);
+    if (await canLaunch(url)) {
+      await launch(
+        url,
+        forceWebView: true,
+        enableJavaScript: true,
+      );
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }

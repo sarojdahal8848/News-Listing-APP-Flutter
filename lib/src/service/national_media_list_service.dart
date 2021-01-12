@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+import 'package:paailaNews/src/common.dart';
 import 'package:paailaNews/src/model/media_list_model.dart';
 
 class NationalMediaListService{
@@ -6,7 +7,7 @@ class NationalMediaListService{
   static Future<List<MediaListModel>> getNationalMediaList() async {
     try{
       final response = await http.get(
-        Uri.encodeFull('http://192.168.1.118:8000/api/media/national'),
+        Uri.encodeFull(BaseUrlProduction+'/media/national'),
         headers: {
           'Accept':'application/json',
           'Content-Type':'application/json'
